@@ -1,0 +1,11 @@
+streamlit
+numpy
+pandas
+matplotlib
+plotly
+scikit-learn
+joblib
+torch
+opencv-python
+Pillow
+streamlit-image-comparison

@@ -1,0 +1,14 @@
+{
+    "model_name": "RandomForestRegressor",
+    "feature_columns": [
+        "img1_mean",
+        "img2_mean",
+        "img1_std",
+        "img2_std",
+        "diff_mean",
+        "diff_std",
+        "change_ratio",
+        "diff_max",
+        "diff_min"
+    ]
+}
