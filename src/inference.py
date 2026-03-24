@@ -9,6 +9,7 @@ from PIL import Image
 # ==============================
 # PROJECT ROOT
 # ==============================
+
 ROOT = Path(__file__).resolve().parents[1]
 
 FEATURE_PATH = ROOT / "data/processed/feature_table.csv"
@@ -17,8 +18,22 @@ LABEL_PATH = ROOT / "data/processed/label_table.csv"
 MODEL_PATH = ROOT / "models/best_change_model.joblib"
 META_PATH = ROOT / "models/model_metadata.json"
 
-# ⭐ NEW DEMO IMAGE DIRECTORY
+# ⭐ DEMO IMAGE DIRECTORY
 DEMO_DIR = ROOT / "data/demo_pairs"
+
+
+# ==============================
+# NORMALIZER (VERY IMPORTANT)
+# ==============================
+
+def normalize_city_name(name: str):
+    return (
+        str(name)
+        .strip()
+        .lower()
+        .replace(" ", "")
+        .replace("-", "_")
+    )
 
 
 # ==============================
@@ -34,6 +49,7 @@ def load_label_table():
 
 
 def load_artifacts():
+
     model = joblib.load(MODEL_PATH)
 
     with open(META_PATH, "r") as f:
@@ -47,19 +63,66 @@ def load_artifacts():
 # ==============================
 
 def list_cities():
+
     df = load_feature_table()
-    return sorted(df["city"].dropna().unique().tolist())
+
+    cities = (
+        df["city"]
+        .dropna()
+        .astype(str)
+        .map(normalize_city_name)
+        .unique()
+        .tolist()
+    )
+
+    return sorted(cities)
 
 
+# ⭐⭐⭐ VERY IMPORTANT FUNCTION ⭐⭐⭐
 def find_city_pair(city: str):
 
-    city_dir = DEMO_DIR / city
+    city_norm = normalize_city_name(city)
 
-    img1 = city_dir / "img1.png"
-    img2 = city_dir / "img2.png"
+    # direct folder
+    city_dir = DEMO_DIR / city_norm
 
-    if img1.exists() and img2.exists():
-        return img1, img2
+    if city_dir.exists():
+
+        for p in city_dir.iterdir():
+
+            name = p.name.lower()
+
+            if name.startswith("img1"):
+                img1 = p
+
+            if name.startswith("img2"):
+                img2 = p
+
+        if "img1" in locals() and "img2" in locals():
+            return img1, img2
+
+    # fallback recursive search
+    for folder in DEMO_DIR.rglob("*"):
+
+        if folder.is_dir():
+
+            if normalize_city_name(folder.name) == city_norm:
+
+                img1 = None
+                img2 = None
+
+                for f in folder.iterdir():
+
+                    n = f.name.lower()
+
+                    if n.startswith("img1"):
+                        img1 = f
+
+                    if n.startswith("img2"):
+                        img2 = f
+
+                if img1 and img2:
+                    return img1, img2
 
     return None, None
 
@@ -95,9 +158,11 @@ def compute_change_map(img1, img2):
 
 def get_city_row(city: str):
 
-    features_df = load_feature_table()
+    df = load_feature_table()
 
-    row = features_df[features_df["city"] == city]
+    df["city"] = df["city"].astype(str).map(normalize_city_name)
+
+    row = df[df["city"] == normalize_city_name(city)]
 
     if row.empty:
         return None
@@ -107,9 +172,11 @@ def get_city_row(city: str):
 
 def get_city_label(city: str):
 
-    labels_df = load_label_table()
+    df = load_label_table()
 
-    row = labels_df[labels_df["city"] == city]
+    df["city"] = df["city"].astype(str).map(normalize_city_name)
+
+    row = df[df["city"] == normalize_city_name(city)]
 
     if row.empty:
         return None
@@ -132,9 +199,7 @@ def predict_city(city: str):
     if row is None:
         return None
 
-    X = pd.DataFrame([
-        {col: row[col] for col in feature_cols}
-    ])
+    X = pd.DataFrame([{col: row[col] for col in feature_cols}])
 
     pred = float(model.predict(X)[0])
 
@@ -142,7 +207,7 @@ def predict_city(city: str):
 
 
 # ==============================
-# ⭐ ADVANCED RISK SCORE
+# ADVANCED RISK SCORE
 # ==============================
 
 def compute_risk_score(city):
