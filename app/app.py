@@ -182,7 +182,17 @@ city = st.selectbox("Select City", cities)
 
 img1_path, img2_path = find_city_pair(city)
 if img1_path is None or img2_path is None:
-    st.error("Satellite pair not found for this city.")
+    st.warning(
+    f"""
+⚠️ Demo Mode Active
+
+Satellite pair for **{city}** is not included in the lightweight demo dataset.
+
+This platform supports full multi-city analysis using the complete OSCD dataset.
+
+👉 Please refer to README for downloading the full dataset.
+"""
+)
     st.stop()
 
 img1 = load_image(img1_path)
