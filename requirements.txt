@@ -6,7 +6,8 @@ pandas
 matplotlib
 plotly
 scikit-learn
+scikit-image
 torch
 opencv-python-headless
-pillow
+Pillow
 joblib
