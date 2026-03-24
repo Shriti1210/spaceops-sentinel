@@ -1,11 +1,12 @@
 streamlit
+streamlit-option-menu
+streamlit-image-comparison
 numpy
 pandas
 matplotlib
 plotly
 scikit-learn
-joblib
 torch
-opencv-python
-Pillow
-streamlit-image-comparison
+opencv-python-headless
+pillow
+joblib
