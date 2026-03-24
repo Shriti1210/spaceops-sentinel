@@ -1,0 +1,15 @@
+city,mask_file,changed_pixels,total_pixels,gt_change_ratio
+abudhabi,data\raw\oscd\Onera Satellite Change Detection dataset - Train Labels\abudhabi\cm\cm.png,23592,627215,0.03761389635133088
+aguasclaras,data\raw\oscd\Onera Satellite Change Detection dataset - Train Labels\aguasclaras\cm\cm.png,4614,247275,0.018659387321807705
+beihai,data\raw\oscd\Onera Satellite Change Detection dataset - Train Labels\beihai\cm\cm.png,17318,696344,0.024869891892512895
+beirut,data\raw\oscd\Onera Satellite Change Detection dataset - Train Labels\beirut\cm\cm.png,33918,1262600,0.026863614763187074
+bercy,data\raw\oscd\Onera Satellite Change Detection dataset - Train Labels\bercy\cm\cm.png,1046,142200,0.007355836849507736
+bordeaux,data\raw\oscd\Onera Satellite Change Detection dataset - Train Labels\bordeaux\cm\cm.png,2380,238337,0.009985860357393104
+cupertino,data\raw\oscd\Onera Satellite Change Detection dataset - Train Labels\cupertino\cm\cm.png,18942,799820,0.0236828286364432
+hongkong,data\raw\oscd\Onera Satellite Change Detection dataset - Train Labels\hongkong\cm\cm.png,13379,375300,0.03564881428190781
+mumbai,data\raw\oscd\Onera Satellite Change Detection dataset - Train Labels\mumbai\cm\cm.png,12244,477906,0.025620101024050754
+nantes,data\raw\oscd\Onera Satellite Change Detection dataset - Train Labels\nantes\cm\cm.png,3449,303804,0.011352714249976959
+paris,data\raw\oscd\Onera Satellite Change Detection dataset - Train Labels\paris\cm\cm.png,458,159120,0.0028783308195072903
+pisa,data\raw\oscd\Onera Satellite Change Detection dataset - Train Labels\pisa\cm\cm.png,9130,557168,0.016386439996554
+rennes,data\raw\oscd\Onera Satellite Change Detection dataset - Train Labels\rennes\cm\cm.png,4932,190857,0.025841336707587356
+saclay_e,data\raw\oscd\Onera Satellite Change Detection dataset - Train Labels\saclay_e\cm\cm.png,4346,439632,0.009885540633984786
